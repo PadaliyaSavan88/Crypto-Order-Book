@@ -1,0 +1,135 @@
+<div class="container">
+  <div class="text-center">
+   <h4>
+    Crypto Trade Book
+   </h4></div>
+  <br>
+  <br>
+  Add Token
+  <hr>
+  <form [formGroup]="tokenForm" (submit)="addToken()">
+    <div class="row">
+      <div class="col-4 d-flex">
+        <p>Token Name: </p>
+        <input class="form-control" formControlName="tokenName" type="text">
+      </div>
+      <div class="col-4 d-flex">
+        <p>Token Symbol: </p>
+        <input class="form-control" formControlName="tokenSymbol" type="text">
+      </div>
+      <div class="col-4 d-flex">
+        <button type="submit" class="btn btn-primary">Add Token</button>
+      </div>
+    </div>
+  </form>
+  <br>
+  <br>
+  <div>
+    Orders
+    <hr>
+    <div class="row">
+      <div class="col-6">
+        Buy Orders
+        <br>
+        <form [formGroup]="buyFormGroup" (ngSubmit)="addOrder()">
+          <div class="row">
+            <div class="col-3">
+              <select class="form-control" formControlName="token">
+                <option *ngFor="let token of tokens" [value]="token.tokenSymbol">{{token.tokenSymbol}}</option>
+              </select>
+            </div>
+            <div class="col-3">
+              <input class="form-control" formControlName="quantity" placeholder="quantity" type="text">
+            </div>
+            <div class="col-3">
+              <input class="form-control" formControlName="price" placeholder="Price" type="text">
+            </div>
+            <div class="col-3">
+              <button type="submit" class="btn btn-primary">Buy</button>
+            </div>
+          </div>
+        </form>
+        <br>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trade of buyTrades">
+              <td>{{trade.token}}</td>
+              <td>{{trade.quantity}}</td>
+              <td>{{trade.price}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-6">
+        Sell Orders
+        <br>
+        <form [formGroup]="sellFormGroup" (ngSubmit)="sellOrder()">
+          <div class="row">
+            <div class="col-3">
+              <select class="form-control" formControlName="token">
+                <option *ngFor="let token of tokens" [value]="token.tokenSymbol">{{token.tokenSymbol}}</option>
+              </select>
+            </div>
+            <div class="col-3">
+              <input class="form-control" formControlName="quantity" placeholder="quantity" type="text">
+            </div>
+            <div class="col-3">
+              <input class="form-control" formControlName="price" placeholder="Price" type="text">
+            </div>
+            <div class="col-3">
+              <button type="submit" class="btn btn-danger">Sell</button>
+            </div>
+          </div>
+        </form>
+        <br>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trade of sellTrades">
+              <td>{{trade.token}}</td>
+              <td>{{trade.quantity}}</td>
+              <td>{{trade.price}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div>
+    <br>
+    History
+    <hr>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trade of history">
+          <td>{{trade.token}}</td>
+          <td>{{trade.quantity}}</td>
+          <td>{{trade.price}}</td>
+          <td *ngIf="trade.type === 1" class="text-danger">Sell</td>
+          <td *ngIf="trade.type === 2" class="text-success">Buy</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
